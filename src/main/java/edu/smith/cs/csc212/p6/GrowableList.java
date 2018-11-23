@@ -1,6 +1,8 @@
 package edu.smith.cs.csc212.p6;
 
+import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
+import edu.smith.cs.csc212.p6.errors.RanOutOfSpaceError;
 
 public class GrowableList<T> implements P6List<T> {
 	public static final int START_SIZE = 32;
@@ -14,22 +16,37 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public T removeFront() {
-		throw new P6NotImplemented();
+		return removeIndex(0);
 	}
 
 	@Override
 	public T removeBack() {
-		throw new P6NotImplemented();
+		if (this.size() == 0) {
+			throw new EmptyListError();
+		}
+		T value = this.getIndex(fill -1);
+		this.array[fill-1] = null;
+		fill --;
+		return value;
 	}
 
 	@Override
 	public T removeIndex(int index) {
-		throw new P6NotImplemented();
+		if (this.size() ==0) {
+			throw new EmptyListError();
+		}
+		T removed = this.getIndex(index);
+		fill --;
+		for (int i=index; i<fill; i++) {
+			this.array[i] = this.array[i+1];
+		}
+		this.array[fill] = null;
+		return removed;
 	}
 
 	@Override
 	public void addFront(T item) {
-		throw new P6NotImplemented();
+		addIndex(item, 0);
 	}
 
 	@Override
@@ -43,7 +60,15 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public void addIndex(T item, int index) {
-		throw new P6NotImplemented();
+		if (fill >= array.length) {
+			throw new RanOutOfSpaceError();
+		}
+		//loop backwards, shifting items to the right
+		for (int j=fill; j>index; j--) {
+			array[j] = array[j-1];
+		}
+		array[index] = item;
+		fill ++;
 	}
 	
 	@Override

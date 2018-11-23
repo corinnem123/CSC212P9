@@ -2,6 +2,7 @@ package edu.smith.cs.csc212.p6;
 
 import java.util.Iterator;
 
+import edu.smith.cs.csc212.p6.errors.BadIndexError;
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.P6NotImplemented;
 
@@ -10,6 +11,7 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 	 * The start of this list. Node is defined at the bottom of this file.
 	 */
 	Node<T> start;
+	private int fill;
 
 	@Override
 	public T removeFront() {
@@ -31,7 +33,16 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public void addFront(T item) {
-		this.start = new Node<T>(item, start);
+		Node<T> first = (Node<T>) getFront();
+		if (first = null) {
+			first = new Node(item, null);
+		} else {
+			Node<T> n = new Node<T>(item, start);
+			n.next = (Node<T>) first;
+			this.start = n;
+		}
+		
+		addIndex(n, 0);
 	}
 
 	@Override
@@ -56,7 +67,18 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public T getIndex(int index) {
-		throw new P6NotImplemented();
+		Node<T> head = null;
+		Node<T> current = head;
+		int count = 0;
+		while (current != null) {
+			if (count == index) {
+				return current.value;
+			}
+			count++;
+			current= current.next;
+		}
+		//assert fail if calling non-existant line
+		throw new BadIndexError();
 	}
 
 	@Override
@@ -70,7 +92,7 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 
 	@Override
 	public boolean isEmpty() {
-		throw new P6NotImplemented();
+		return this !=null;
 	}
 
 	/**

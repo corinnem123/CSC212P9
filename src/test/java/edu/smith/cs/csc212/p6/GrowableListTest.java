@@ -20,6 +20,7 @@ public class GrowableListTest {
 	}
 		
 	@Test
+	//passing rn
 	public void testEmpty() {
 		P6List<String> data = makeEmptyList();
 		Assert.assertEquals(0, data.size());
@@ -213,6 +214,7 @@ public class GrowableListTest {
 	}
 	
 	@Test
+	//passing rn
 	public void testAddIndexFront() {
 		P6List<String> data = makeEmptyList();
 		data.addBack("A");
@@ -251,6 +253,7 @@ public class GrowableListTest {
 	}
 	
 	@Test
+	//passing
 	public void testGetFront() {
 		P6List<String> data = makeFullList();
 		assertEquals("a", data.getFront());
@@ -311,6 +314,7 @@ public class GrowableListTest {
 	}
 	
 	@Test
+	//passing
 	public void testQueue() {
 		P6List<Integer> data = makeEmptyList();
 		
